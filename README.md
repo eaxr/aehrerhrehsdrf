@@ -1,7 +1,8 @@
 angular + fastapi + sqlalchemy
 
-```
+
 Используемые пакеты:
+```
 asyncio==3.4.3
 asyncpg==0.23.0
 sqlalchemy==1.4.36
