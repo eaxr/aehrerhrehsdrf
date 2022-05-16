@@ -1,0 +1,31 @@
+<div class="header">
+  <span>hidden_text</span>
+</div>
+
+<div class="content">
+  <div class="table table-block">
+    <table class="table table-striped">
+      <thead>
+        <tr class="table title">
+          <th>id</th>
+          <th>Title</th>
+          <th>Content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="table body" *ngFor="let note of notesList | paginate: {itemsPerPage: 5, currentPage: page};">
+          <td>{{ note.id }}</td>
+          <td>{{ note.title }}</td>
+          <td>{{ note.description }}</td>
+        </tr>
+      </tbody>
+      <tfoot id="pagination-control-container">
+        <tr class="tableFooter">
+          <td [colSpan]="3">
+            <pagination-controls (pageChange)="page = $event"></pagination-controls>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+  
+  frontend:
+    build:
+      context: ./
+      dockerfile: Dockerfile-Frontend
+    environment:
+      - API_BACKEND=${API_BACKEND}
+    working_dir: /home/node/app
+    command: sh -c
+      "sed -i '/apiURL/c\  apiURL":" "'"${API_BACKEND}"'"' ./src/environments/environment.ts
+      && ng serve --host 0.0.0.0 --port ${FRONTEND_PORT}"
+    volumes:
+      - './frontend:/home/node/app'
+      - './frontend/node_modules:/home/node/app/node_modules'
+    ports:
+      - ${FRONTEND_PORT}:${FRONTEND_PORT}
+
+  backend:
+    build:
+      context: ./
+      dockerfile: Dockerfile-Backend
+    ports:
+      - ${BACKEND_PORT}:${BACKEND_PORT}
+    environment:
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASS=${DATABASE_PASS}
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_HOST=db:${DATABASE_PORT}
+      - CORS_URL=${CORS_URL}
+    volumes:
+      - ./backend:/app
+    command: /bin/bash -c
+      'sleep 45
+      && alembic revision --autogenerate -m "new build"
+      && alembic upgrade head
+      && uvicorn src.main:apiMain --reload --host 0.0.0.0 --port ${BACKEND_PORT}'
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13
+    expose:
+      - ${DATABASE_PORT}
+    environment:
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASS}
+      - POSTGRES_DB=${DATABASE_NAME}
+    volumes:
+      - ./data:/var/lib/postgresql/data/

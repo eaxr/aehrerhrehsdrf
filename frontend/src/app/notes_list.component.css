@@ -1,0 +1,39 @@
+.header {
+  visibility: hidden;
+  margin: 7% 5%;
+}
+
+.content {
+  border-radius: 15px 15px 15px 15px;
+  border: 8px solid #347264;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 8px;
+  color: black;
+}
+
+th {
+  text-align: left;
+  position: sticky;
+}
+
+.table .title {
+  font-size: 18px;
+  background-color: #679597;
+  color: black;
+}
+
+.table .body {
+  font-size: 16px;
+  color: black;
+}
+
+.tableFooter {
+  background-color: #347264;
+}

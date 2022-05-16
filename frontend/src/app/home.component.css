@@ -1,0 +1,11 @@
+.content {
+  height: 550px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hellotext {
+  width: 50% border-box;
+  font-size: 120px;
+}
